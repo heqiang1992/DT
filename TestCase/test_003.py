@@ -7,27 +7,25 @@ import sys
 import pytest
 
 
-@pytest.fixture()
-def hook():
-    print("before")
-    return True
+# @pytest.fixture()
+# def hook():
+#     print("before")
+#     return True
 
 
 
-# @pytest.mark.usefixtures("hook")
-# @hy_hooker
-# def test_003_one():
-#     cls = AutoEngine()
-#     cls.login_node(id="3")
-#     res = cls.execute_cmd(nodeID="3", cmd="ll")
-#     # res = cls.execute_cmd(nodeID="3", cmd="pcs status")
-#     cls.log_info("回显是：%s" % res)
-#
-#     raise Exception("raise")
+
+def test_003_one():
+    cls = AutoEngine()
+    cls.login_node(id="3")
+    res = cls.execute_cmd(nodeID="3", cmd="ll")
+    # res = cls.execute_cmd(nodeID="3", cmd="pcs status")
+    cls.log_info("回显是：%s" % res)
+
+    raise Exception("raise")
 
 
-@pytest.mark.usefixtures("hook")
-@hy_hooker
+
 def test_004_one():
 
     cls = AutoEngine()
@@ -40,4 +38,5 @@ def test_004_one():
                 "nics": "demo_net","os_type": "linux", "ram": 1024,
                 "vcpus": 1}
     cls.connector.create_vm(setting)
+
 

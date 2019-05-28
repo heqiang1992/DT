@@ -5,8 +5,7 @@
 import re
 import requests
 import json
-from lib.connectBase import Connection
-import RequestData
+from config import RequestData
 from CMD_AW import CmdWrapper
 
 

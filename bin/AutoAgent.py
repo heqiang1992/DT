@@ -5,7 +5,8 @@
 from testSetReader import XML_PARSER
 import sys, os
 import pytest
-from lib.LoggerBase import LoggerBase
+from lib.Logger.LoggerBase import LoggerBase
+from lib import glo
 
 xmlFile = sys.argv[1]
 
@@ -15,12 +16,10 @@ class AutoAgent():
         self.__getSetInfo()
         self.start()
 
-    def __pytest_initialization(self):
-        pass
-
     def __getSetInfo(self):
         parser = XML_PARSER(xmlFile)
         self.setDir = parser.getSetDir()
+        glo.set_value('xml', self.setDir)
 
     def start(self):
         """
@@ -33,7 +32,7 @@ class AutoAgent():
         main_args.append(report_arg)
         main_args.append("-s")   # pytest打开调试模式
         main_args.extend(self.setDir["cases"].values())
-        pytest.main(main_args, [self.__plugins()])
+        pytest.main(main_args, )
 
     def __plugins(self):
         """

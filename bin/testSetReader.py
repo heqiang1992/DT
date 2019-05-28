@@ -14,14 +14,9 @@ class XML_PARSER(object):
     def getSetDir(self):
         setDir = {}
         setDir["cases"] = self.__getCase()
+        setDir["nodes"] = self.__getDevice()
         setDir["log_path"] = self.__getLogPath()
         return setDir
-
-    def getBedDir(self):
-        BedDir = {}
-        BedDir["nodes"] = self.__getDevice()
-        BedDir["log_path"] = self.__getLogPath()
-        return BedDir
 
     def __getDevice(self):
 
@@ -56,4 +51,4 @@ class XML_PARSER(object):
 
 
 if (__name__ == "__main__"):
-    i = XML_PARSER("C:\Users\Administrator\PycharmProjects\DT\lib\set.xml")
+    pass

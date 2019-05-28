@@ -2,17 +2,12 @@
 # -*- coding: utf-8 -*-
 
 
-from testSetReader import XML_PARSER
 from interface.hyhive import HttpHyHive
 from interface.CMD_AW import CmdWrapper
 import traceback
-from AutoAgent import xmlFile
-from connectBase import Connection
-from LoggerBase import LoggerBase
+from Logger.LoggerBase import LoggerBase
 from WEBUI.WebTestBase import WebTestBase
 import glo
-
-
 
 def hy_hooker(func):
     def wrapper(*args, **kwargs):
@@ -35,8 +30,7 @@ def hy_hooker(func):
 class AutoEngine():
 
     def __init__(self, **kwargs):
-        parser = XML_PARSER(xmlFile)
-        self.bedDir = parser.getBedDir()
+        self.bedDir = glo._global_dict["xml"]
         self.case_name = traceback.extract_stack()[-2][2]
         self.__log_initialization()
 

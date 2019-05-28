@@ -38,7 +38,7 @@ class Connection(object):
             self.channel = channel
         return channel.send(cmd + "\n")
 
-    def __receive(self, channel, timeout=30):
+    def __receive(self, channel, timeout=30 ):
         waitList = [r"]#", r":/>"]
         info = []
         timestamp = time.time()
@@ -61,6 +61,7 @@ class Connection(object):
         return p
 
     def exe_cmd(self, cmd):
+
         self.__send(self.channel, cmd)
         stdout = self.__receive(self.channel)
         return stdout

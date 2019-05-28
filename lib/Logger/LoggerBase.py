@@ -18,7 +18,8 @@ class LoggerBase(object):
         date = self.generate_time_postfix()
         self.dir_path = name + date
         os.mkdir(self.dir_path)
-        self.f = open(self.dir_path + "\%s.html" % date, "a+")
+        self.file_path = self.dir_path + "\%s.html" % date
+        self.f = open(self.file_path, "a+")
         self.f.write(html_template.template_head)
         return True
 
@@ -56,3 +57,6 @@ class LoggerBase(object):
     def case_down(self):
         self.f.write(html_template.template_end)
         self.f.close()
+
+    def __del__(self):
+        self.case_down()
