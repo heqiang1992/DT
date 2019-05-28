@@ -37,7 +37,7 @@ class LoggerBase(object):
         if isinstance(p, (list, tuple)):
             p = ",".join(p)
         else:
-            p = str(p)
+            p = str(p.encode("utf-8"))
         stream = re.sub("content", p.replace("\n", "<br>"), stream)
         self.f.write(stream)
 

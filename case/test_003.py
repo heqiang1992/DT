@@ -32,7 +32,7 @@ def test_004_one():
 
     cls = AutoEngine()
     cls.generate_http_connector(host="1")
-    res = cls.connector.swith_project(prj="test")
+    res = cls.connector.swith_project(prj="demo")
     # 必须指定镜像和网络
     setting = {"disks": [
             {"delete_on_termination": "no", "disk_bus": "virtio", "id": "win10qcow2",

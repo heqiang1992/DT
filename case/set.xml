@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <config>
-    <log>C:\Users\Administrator\PycharmProjects\DT\case\log\</log>
+    <log>D:\code\DT\case\log\</log>
     <nodes>
         <node id="1" master="TRUE">
         <loginInfo ip="10.0.20.25" username="root" password="daemon" port="22" webuser="administrator"
@@ -20,6 +20,6 @@
     <case>
         <!--<test>C:\Users\Administrator\PycharmProjects\DT\lib\test_001.py</test>-->
         <!--<test>C:\Users\Administrator\PycharmProjects\DT\lib\test_002.py</test>-->
-        <test>C:\Users\Administrator\PycharmProjects\DT\case\test_003.py</test>
+        <test>D:\code\DT\case\test_003.py</test>
     </case>
 </config>

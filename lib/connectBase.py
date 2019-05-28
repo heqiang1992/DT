@@ -28,7 +28,7 @@ class Connection(object):
         channel = ssh.open_session()
         channel.get_pty(width=200, height=200)
         channel.invoke_shell()
-        channel.settimeout(120)
+        channel.settimeout(10)
         return channel
 
     def __send(self, channel, cmd):
@@ -38,7 +38,7 @@ class Connection(object):
             self.channel = channel
         return channel.send(cmd + "\n")
 
-    def __receive(self, channel, timeout=60):
+    def __receive(self, channel, timeout=30):
         waitList = [r"]#", r":/>"]
         info = []
         timestamp = time.time()

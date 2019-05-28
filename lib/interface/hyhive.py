@@ -50,9 +50,9 @@ class HttpHyHive(CmdWrapper):
         :param setting:
         :return:
         """
-        glance_id = self.get_glance_id(setting["disks"]["id"])
+        glance_id = self.get_glance_id(setting["disks"][0]["id"])
         nit_id, subnet_id = self.get_nics_id(setting["nics"])
-        setting["disks"]["id"] = glance_id
+        setting["disks"][0]["id"] = glance_id
         setting["nics"] = [{"net-id": nit_id, "subnet-id": subnet_id}]
         data = {"auto_start": 0, "count": 1, "disks": None,
                 "drs_enabled": 0, "host": "", "name": None,
@@ -61,8 +61,8 @@ class HttpHyHive(CmdWrapper):
         data.update(setting)
         url = self.baseurl + RequestData.VM_CREATE
         print (json.dumps(data))
-        # con = requests.post(url, data=json.dumps(data), cookies=self.con.cookies, headers=RequestData.headers)
-        # return con.content
+        con = requests.post(url, data=json.dumps(data), cookies=self.con.cookies, headers=RequestData.headers)
+        return con.content
 
     def check_operation_log(self):
         url = "http://%s/api/hyhive/log/operation/list" % (self.nodeInfo["ip"])
