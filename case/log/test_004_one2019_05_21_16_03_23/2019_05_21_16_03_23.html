@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="GB2312 ">
+<title>DT_hyhive</title>
+<style> 
+.css1{ width:280px;  solid #000; text-align:center; white-space: nowrap;text-overflow: ellipsis;overflow: hidden;  } 
+.css2{ width:320px;  solid #000; white-space: nowrap;text-overflow: ellipsis;overflow: hidden;  } 
+.css3{ solid #000; float:left;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;  } 
+</style> 
+</head>
+<body>
+<p></p>
+<p></p>
+<table width="100%" border="1" style="table-layout:fixed">
+<tr>
+<td class="css1">time</td>
+<td class="css1">path</td>
+<td>stdout</td>
+</tr>
+
+<tr>
+<td class="css1">2019-05-21-16-03-25</td>
+<td class="css2">  File "C:\Users\Administrator\PycharmProjects\DT\case	est_003.py", line 34, in test_004_one
+    cls.generate_http_connector(host="1")
+<br>  File "C:\Users\Administrator\PycharmProjects\DT\lib\AutoEngine.py", line 87, in generate_http_connector
+    self.connector = HttpHyHive(**node_info)
+<br>  File "C:\Users\Administrator\PycharmProjects\DT\lib\interface\hyhive.py", line 25, in __init__
+    self.login_admin()
+</td>
+<td style="abbr:text">>>>>>> login success <<<<<<</td>
+</tr>
+
+<tr>
+<td class="css1">2019-05-21-16-03-45</td>
+<td class="css2">  File "C:\Users\Administrator\PycharmProjects\DT\lib\interface\hyhive.py", line 38, in swith_project
+    cmd = Connection(**self.bedDir)
+<br>  File "C:\Users\Administrator\PycharmProjects\DT\lib\connectBase.py", line 20, in __init__
+    self.channel = self.__createChannel()
+<br>  File "C:\Users\Administrator\PycharmProjects\DT\lib\connectBase.py", line 32, in __createChannel
+    self.__receive(channel)
+</td>
+<td style="abbr:text">Last login: Tue May 21 15:50:22 2019 from 10.0.6.138<br><br>[root@node25 ~]# </td>
+</tr>
+
+<tr>
+<td class="css1">2019-05-21-16-03-55</td>
+<td class="css2">  File "C:\Users\Administrator\PycharmProjects\DT\case	est_003.py", line 35, in test_004_one
+    res = cls.connector.swith_project(prj="test")
+<br>  File "C:\Users\Administrator\PycharmProjects\DT\lib\interface\hyhive.py", line 39, in swith_project
+    cmd.exe_cmd(". keystone_admin.rc")
+<br>  File "C:\Users\Administrator\PycharmProjects\DT\lib\connectBase.py", line 64, in exe_cmd
+    stdout = self.__receive(self.channel)
+</td>
+<td style="abbr:text">. keystone_ad<br>min.rc<br>[root@node25 ~]# </td>
+</tr>
+
+<tr>
+<td class="css1">2019-05-21-16-04-07</td>
+<td class="css2">  File "C:\Users\Administrator\PycharmProjects\DT\case	est_003.py", line 35, in test_004_one
+    res = cls.connector.swith_project(prj="test")
+<br>  File "C:\Users\Administrator\PycharmProjects\DT\lib\interface\hyhive.py", line 40, in swith_project
+    res = cmd.exe_cmd("openstack project show %s" % prj)
+<br>  File "C:\Users\Administrator\PycharmProjects\DT\lib\connectBase.py", line 64, in exe_cmd
+    stdout = self.__receive(self.channel)
+</td>
+<td style="abbr:text">openstack <br>proj<br>ect show test<br><br>+-------------+----------------------------------+<br>| Field       | Value                            |<br>+-------------+----------------------------------+<br>| description |                                  |<br>| domain_id   | default                          |<br>| enabled     | True                             |<br>| id          | 5c1c000183874230aeee2a92cdd3fdb8 |<br>| is_domain   | False                            |<br>| name        | test                             |<br>| parent_id   | default                          |<br>+-------------+----------------------------------+<br>[root@node25 ~]# </td>
+</tr>
+
+<tr>
+<td class="css1">2019-05-21-16-04-08</td>
+<td class="css2">  File "C:\Python27\lib\site-packages\_pytest\python.py", line 178, in pytest_pyfunc_call
+    testfunction(**testargs)
+<br>  File "C:\Users\Administrator\PycharmProjects\DT\lib\AutoEngine.py", line 18, in wrapper
+    func(*args, **kwargs)
+<br>  File "C:\Users\Administrator\PycharmProjects\DT\case	est_003.py", line 35, in test_004_one
+    res = cls.connector.swith_project(prj="test")
+</td>
+<td style="abbr:text">>>>>>> switch project success <<<<<<</td>
+</tr>
+
+</table>
+</body>
+</html>

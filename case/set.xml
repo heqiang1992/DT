@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+    <log>C:\Users\Administrator\PycharmProjects\DT\case\log\</log>
+    <nodes>
+        <node id="1" master="TRUE">
+        <loginInfo ip="10.0.20.25" username="root" password="daemon" port="22" webuser="administrator"
+                       webpwd="123456">node25</loginInfo>
+        </node>
+        <node id="2">
+        <loginInfo ip="0.0.0.0" username="" password="daemon" port="22" webuser="administrator"
+                       webpwd="123456">node26</loginInfo>
+        </node>
+        <node id="3">
+            <loginInfo ip="10.0.5.151" username="root" password="daemon" port="22" webuser="administrator"
+                       webpwd="123456">node27
+            </loginInfo>
+        </node>
+    </nodes>
+    <case>
+        <!--<test>C:\Users\Administrator\PycharmProjects\DT\lib\test_001.py</test>-->
+        <!--<test>C:\Users\Administrator\PycharmProjects\DT\lib\test_002.py</test>-->
+        <test>C:\Users\Administrator\PycharmProjects\DT\case\test_003.py</test>
+    </case>
+</config>
