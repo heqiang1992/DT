@@ -38,8 +38,10 @@ class Connection(object):
             self.channel = channel
         return channel.send(cmd + "\n")
 
-    def __receive(self, channel, timeout=30 ):
-        waitList = [r"]#", r":/>"]
+    def __receive(self, channel, **kwargs):
+
+        waitList = kwargs.get("waitList", [r"]#", r":/>"])
+        timeout = kwargs.get("timeout", 30)
         info = []
         timestamp = time.time()
         while True:
@@ -61,13 +63,17 @@ class Connection(object):
         return p
 
     def exe_cmd(self, cmd):
-
+        if isinstance(cmd, dict):
+            self.__send(self.channel, cmd["cmd"])
+            for field in cmd["waitstr"]:
+                stdout = self.__receive(self.channel,**cmd)
         self.__send(self.channel, cmd)
         stdout = self.__receive(self.channel)
         return stdout
 
     def close(self):
         self.channel.close()
+
 
 if __name__ == "__main__":
     pass

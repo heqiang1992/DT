@@ -12,7 +12,7 @@
                        webpwd="123456">node26</loginInfo>
         </node>
         <node id="3">
-            <loginInfo ip="10.0.5.151" username="root" password="daemon" port="22" webuser="administrator"
+            <loginInfo ip="10.0.30.73" username="root" password="daemon" port="22" webuser="administrator"
                        webpwd="123456">node27
             </loginInfo>
         </node>

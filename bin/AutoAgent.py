@@ -30,7 +30,7 @@ class AutoAgent():
         timestamp = LoggerBase.generate_time_postfix()
         report_arg = "--html=%s.html" % (self.setDir["log_path"] + timestamp)
         main_args.append(report_arg)
-        main_args.append("-s")   # pytest打开调试模式
+        main_args.append("-s --disable-warnings")   # pytest打开调试模式,禁用告警
         main_args.extend(self.setDir["cases"].values())
         pytest.main(main_args, )
 

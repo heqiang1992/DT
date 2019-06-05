@@ -3,7 +3,7 @@
 
 
 from interface.hyhive import HttpHyHive
-from interface.CMD_AW import CmdWrapper
+from interface.CmdWrapper import CmdWrapper
 import traceback
 from Logger.LoggerBase import LoggerBase
 from WEBUI.WebTestBase import WebTestBase
