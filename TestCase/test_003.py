@@ -3,6 +3,8 @@
 
 from lib.AutoEngine import AutoEngine
 import pytest
+
+
 # @pytest.fixture(scope="function")
 # def hook():
 #     print("before")
@@ -10,17 +12,19 @@ import pytest
 # @pytest.mark.usefixtures("hook")
 
 
+def test_003_demo():
+    cls = AutoEngine()
+    cls.login_node(id="1")
+    res = cls.execute_cmd(nodeID="1", cmd="pcs status")
+    # import re,time
+    # name_list = re.findall("volume-.+\n", res)
+    # for name in name_list:
+    #     time.sleep(60)
+    #     cls.execute_cmd(nodeID="1", cmd="rbd remove ssd_for_volume/%s" % name.replace("\r\n", ""))
+    # res = cls.execute_cmd(nodeID="3", cmd="pcs status")
+    # cls.log_info("回显是：%s" % res)
 
-# def test_003_demo():
-#     cls = AutoEngine()
-#     cls.login_node(id="3")
-#     res = cls.execute_cmd(nodeID="3", cmd="ll")
-#     # res = cls.execute_cmd(nodeID="3", cmd="pcs status")
-#     cls.log_info("回显是：%s" % res)
-#
-#     raise Exception("raise")
-
-
+    raise Exception("raise error")
 
 # def test_004_demo():
 #
@@ -38,5 +42,5 @@ import pytest
 
 def test_005_demo():
     cls = AutoEngine()
-    cls.login_node(id="1")
-    res = cls.execute_cmd(nodeID="1", cmd="ll")
+    cls.login_node(id="3")
+    res = cls.execute_cmd(nodeID="3", cmd={"cmd":"rm a.txt","waitstr":["‘a.txt’?","y"]})

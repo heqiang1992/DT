@@ -4,7 +4,7 @@
 import os, re
 import time
 import datetime
-import html_template
+from .html_template import *
 import traceback
 from collections import Iterable
 
@@ -20,7 +20,7 @@ class LoggerBase(object):
         os.mkdir(self.dir_path)
         self.file_path = self.dir_path + "\%s.html" % date
         self.f = open(self.file_path, "a+")
-        self.f.write(html_template.template_head)
+        self.f.write(template_head)
         return True
 
     @classmethod
@@ -32,30 +32,32 @@ class LoggerBase(object):
 
     def info(self, p):
         timestamp = self.generate_time_postfix()
-        stream = re.sub("time", timestamp.replace("_","-"), html_template.template_info)
+        stream = re.sub("time", timestamp.replace("_","-"), template_info)
         path = "<br>".join(traceback.format_list(traceback.extract_stack())[-5:-2])
-        stream = re.sub("path", path, stream)
-        if isinstance(p, (list, tuple)):
-            p = ",".join(p)
-        else:
-            p = str(p.encode("utf-8"))
-        stream = re.sub("content", p.replace("\n", "<br>"), stream)
-        self.f.write(stream)
-
-    def warning(self, p):
-        timestamp = self.generate_time_postfix()
-        stream = re.sub("time", timestamp, html_template.template_warning)
-        path = "<br>".join(traceback.format_list(traceback.extract_stack())[-5:-2])
-        stream = re.sub("path", path, stream)
+        # stream = re.sub("path", str(path), stream)
+        stream = stream.replace("path", path)
         if isinstance(p, (list, tuple)):
             p = ",".join(p)
         else:
             p = str(p)
-        stream = re.sub("content", p.replace("\n", "<br>"), stream)
+        stream = stream.replace("content", p.replace("\n", "<br>"))
+        self.f.write(stream)
+
+    def warning(self, p):
+        timestamp = self.generate_time_postfix()
+        stream = re.sub("time", timestamp, template_warning)
+        path = "<br>".join(traceback.format_list(traceback.extract_stack())[-5:-2])
+        # stream = re.sub("path", str(path), stream)
+        stream = stream.replace("path", path)
+        if isinstance(p, (list, tuple)):
+            p = ",".join(p)
+        else:
+            p = str(p)
+        stream = stream.replace("content", p.replace("\n", "<br>"))
         self.f.write(stream)
 
     def case_down(self):
-        self.f.write(html_template.template_end)
+        self.f.write(template_end)
         self.f.close()
 
     def __del__(self):

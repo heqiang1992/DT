@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from connectBase import Connection
+from .connectBase import Connection, SFTP
 import re
 
 
@@ -13,7 +13,6 @@ class CmdWrapper(object):
         :param kwargs: nodeinfo  not bedinfo
         """
         self.nodeshell = Connection(**kwargs)
-
 
     def __extract_string(self, materials, head=False):
         """
@@ -68,3 +67,29 @@ class CmdWrapper(object):
         ID = re.search("\sid\s+\|\s+\w+\s", res).group(0)
         ID = self.__extract_string(ID)
         return ID
+
+    def sftp_file_to_linux(self, **kwargs):
+        """
+
+        :return:
+        """
+        sftp_host = kwargs.get("ip", "10.0.6.138")
+        localpath = kwargs.get("localpath", "/root/")
+        remotepath = kwargs.get("remotepath")
+        username = kwargs.get("username", "root")
+        password = kwargs.get("password", "123456")
+        port = kwargs.get("port", 22)
+        client = SFTP(sftp_host, username, password)
+
+    def resolv_fingerprint(self, **kwargs):
+        ip = kwargs.get("ip")
+        try:
+            res = self.nodeshell.exe_cmd("sftp root@%s" % ip)
+            if "you want to continue connecting (yes/no)?" in res:
+                res = self.nodeshell.exe_cmd("yes")
+                if "password:" in res:
+                    print("fingerprint ok")
+        except:
+            print("fingerprint fault ~~~~~~")
+        finally:
+            self.nodeshell.exe_cmd("\x03")

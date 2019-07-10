@@ -22,6 +22,25 @@ def pytest_configure(config):
 # cells.insert(1,html.th("Test_nodeid"))
 # cells.pop()
 
+@pytest.mark.hookwrapper
+def pytest_runtest_makereport(item):
+    outcome = yield
+    pytest_html = item.config.pluginmanager.getplugin('html')
+    report = outcome.get_result()
+    extra = getattr(report, 'extra', [])
+    if report.when == 'call' or report.when == "setup":
+        if report.failed:
+            if "Logger" in _global_dict.keys():
+                _global_dict["Logger"].warning(outcome.result.longreprtext)
+                # _global_dict["Logger"].case_down()
+                link = _global_dict["Logger"].file_path
+                report.link = link
+        else:
+            if "Logger" in _global_dict.keys():
+                link = _global_dict["Logger"].file_path
+                report.link = link
+
+
 @pytest.mark.optionalhook
 def pytest_html_results_table_row(report, cells):
     if report.failed:
@@ -32,20 +51,4 @@ def pytest_html_results_table_row(report, cells):
     cells.pop()
 
 
-@pytest.mark.hookwrapper
-def pytest_runtest_makereport(item):
-    outcome = yield
-    pytest_html = item.config.pluginmanager.getplugin('html')
-    report = outcome.get_result()
-    extra = getattr(report, 'extra', [])
-    if report.when == 'call' or report.when == "setup":
-        if report.failed:
-            if _global_dict.has_key("Logger"):
-                _global_dict["Logger"].warning(outcome.result.longreprtext)
-                _global_dict["Logger"].case_down()
-                link = _global_dict["Logger"].file_path
-                report.link = link
-        else:
-            if _global_dict.has_key("Logger"):
-                link = _global_dict["Logger"].file_path
-                report.link = link
+

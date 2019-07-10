@@ -6,7 +6,7 @@ import re
 import requests
 import json
 from config import RequestData
-from CmdWrapper import CmdWrapper
+from .CmdWrapper import CmdWrapper
 
 
 class HttpHyHive(CmdWrapper):

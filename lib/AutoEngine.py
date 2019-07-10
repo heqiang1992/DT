@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 
-from interface.hyhive import HttpHyHive
-from interface.CmdWrapper import CmdWrapper
+from lib.interface.hyhive import HttpHyHive
+from lib.interface.CmdWrapper import CmdWrapper
 import traceback
-from Logger.LoggerBase import LoggerBase
-from WEBUI.WebTestBase import WebTestBase
-import glo
+from lib.Logger.LoggerBase import LoggerBase
+from lib.WEBUI.WebTestBase import WebTestBase
+from lib import glo
+
 
 def hy_hooker(func):
     def wrapper(*args, **kwargs):
@@ -54,26 +55,25 @@ class AutoEngine():
         channel_name = "channel" + id
         setattr(self, channel_name, con)
 
-    def execute_cmd(self, nodeID, cmd):
+    def execute_cmd(self, nodeID, cmd, timeout=60):
         attr_name = "channel" + nodeID
         channel = getattr(self, attr_name, None)
         if channel:
-            res = channel.nodeshell.exe_cmd(cmd)
+            res = channel.nodeshell.exe_cmd(cmd,timeout)
         else:
             try:
                 self.login_node(id=nodeID)
             except Exception as e:
                 raise e
             else:
-                res = self.execute_cmd(nodeID, cmd)
-        res = res.encode("utf-8")
+                res = self.execute_cmd(nodeID, cmd,timeout)
         return res
 
     def generate_web_driver(self, **kwargs):
         host = kwargs.get("host", "1")
         node_info = self.bedDir["nodes"][host]
         node_info["log"] = glo._global_dict["Logger"]
-        self.driver = WebTestBase(**self.bedDir)
+        self.webdriver = WebTestBase(**node_info)
         return True
 
     def generate_http_connector(self, **kwargs):
@@ -82,3 +82,20 @@ class AutoEngine():
         node_info["log"] = glo._global_dict["Logger"]
         self.connector = HttpHyHive(**node_info)
         return True
+
+    def wrapper_excute(self, nodeID, wrapperName, kargs):
+
+        attr_name = "channel" + nodeID
+        channel = getattr(self, attr_name, None)
+        if channel:
+            wrapper = getattr(channel, wrapperName, None)
+            res = wrapper(**kargs)
+        else:
+            try:
+                self.login_node(id=nodeID)
+            except Exception as e:
+                raise e
+            else:
+                wrapper = getattr(channel, wrapperName, None)
+                res = wrapper(**kargs)
+        return res

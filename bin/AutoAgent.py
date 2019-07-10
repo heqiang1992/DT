@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from testSetReader import XML_PARSER
+from bin.testSetReader import XML_PARSER
 import sys, os
 import pytest
 from lib.Logger.LoggerBase import LoggerBase
@@ -30,9 +30,10 @@ class AutoAgent():
         timestamp = LoggerBase.generate_time_postfix()
         report_arg = "--html=%s.html" % (self.setDir["log_path"] + timestamp)
         main_args.append(report_arg)
-        main_args.append("-s --disable-warnings")   # pytest打开调试模式,禁用告警
+        main_args.append("-s")   # pytest打开调试模式,禁用告警
+        main_args.append("--disable-warnings")
         main_args.extend(self.setDir["cases"].values())
-        pytest.main(main_args, )
+        pytest.main(main_args)
 
     def __plugins(self):
         """
