@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from lib.AutoEngine import AutoEngine
-import pytest
+from lib.Logger.LoggerBase import log
+import os
 
 
 # @pytest.fixture(scope="function")
@@ -44,3 +45,7 @@ def test_005_demo():
     cls = AutoEngine()
     cls.login_node(id="3")
     res = cls.execute_cmd(nodeID="3", cmd={"cmd":"rm a.txt","waitstr":["‘a.txt’?","y"]})
+
+
+def test_006_logggg():
+    log.info("hello world")

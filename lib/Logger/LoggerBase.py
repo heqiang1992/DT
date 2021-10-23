@@ -1,64 +1,47 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, re
+import os, re, logging
 import time
 import datetime
-from .html_template import *
 import traceback
 from collections import Iterable
+
+"""
+20210910 日志模块重写，直接引用python标准库logging。
+
+"""
 
 
 class LoggerBase(object):
 
-    def __init__(self, name):
-        self.generate_case_log(name)
+    def __init__(self):
+        self.logger = logging.getLogger()
+        self.logger.setLevel(logging.DEBUG)
+        self._formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-    def generate_case_log(self, name):
-        date = self.generate_time_postfix()
-        self.dir_path = name + date
-        os.mkdir(self.dir_path)
-        self.file_path = self.dir_path + "\%s.html" % date
-        self.f = open(self.file_path, "a+")
-        self.f.write(template_head)
-        return True
+    def _generate_StreamHandler(self, level):
+        """
+        使日志控制台输出
+        :param level: logging.DEBUG,logging.INFO
+        :return:
+        """
+        sh = logging.StreamHandler()
+        sh.setLevel(level)
+        sh.setFormatter(self._formatter)
+        self.logger.addHandler(sh)
 
-    @classmethod
-    def generate_time_postfix(self):
-        TIMESTAMP = datetime.datetime.fromtimestamp(time.time())
-        DATE = datetime.datetime.strftime(TIMESTAMP, "%Y_%m_%d_%H_%M_%S")
-        DATE = str(DATE).replace(" ", "_")
-        return DATE
+    def _generate_FileHandler(self, result_log, level):
+        """
+        不需要使用此函数，logging往控制台输入后，allure会记录
+        :param result_log:
+        :param level : logging.DEBUG,logging.INFO
+        :return:
+        """
+        fh = logging.FileHandler(result_log)
+        fh.setLevel(logging.DEBUG)
+        fh.setFormatter(self._formatter)
+        self.logger.addHandler(fh)
 
-    def info(self, p):
-        timestamp = self.generate_time_postfix()
-        stream = re.sub("time", timestamp.replace("_","-"), template_info)
-        path = "<br>".join(traceback.format_list(traceback.extract_stack())[-5:-2])
-        # stream = re.sub("path", str(path), stream)
-        stream = stream.replace("path", path)
-        if isinstance(p, (list, tuple)):
-            p = ",".join(p)
-        else:
-            p = str(p)
-        stream = stream.replace("content", p.replace("\n", "<br>"))
-        self.f.write(stream)
 
-    def warning(self, p):
-        timestamp = self.generate_time_postfix()
-        stream = re.sub("time", timestamp, template_warning)
-        path = "<br>".join(traceback.format_list(traceback.extract_stack())[-5:-2])
-        # stream = re.sub("path", str(path), stream)
-        stream = stream.replace("path", path)
-        if isinstance(p, (list, tuple)):
-            p = ",".join(p)
-        else:
-            p = str(p)
-        stream = stream.replace("content", p.replace("\n", "<br>"))
-        self.f.write(stream)
-
-    def case_down(self):
-        self.f.write(template_end)
-        self.f.close()
-
-    def __del__(self):
-        self.case_down()
+log = LoggerBase().logger
